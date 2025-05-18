@@ -1,6 +1,6 @@
 {
   "name": "svelte-doc-llm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert markdown documentation to LLM-friendly format",
   "main": "index.js",
   "type": "module",
@@ -9,7 +9,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "llm": "node ./index.js"
+    "llm": "node ./index.js",
+    "ch": "npx changeset",
+    "cv": "npx changeset version",
+    "cp": "npx changeset publish"
   },
   "keywords": [
     "svelte",

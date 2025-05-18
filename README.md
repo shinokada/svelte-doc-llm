@@ -24,7 +24,7 @@ Configuration can be provided in a `llm.config.js` file:
 ```javascript
 export default {
   srcDir: "./src/routes/docs",   // Input directory with markdown files
-  outDir: "./llm",               // Output directory for processed files
+  outDir: "./static/llm",        // Output directory for processed files
   ignore: ["## References"],     // Sections to remove (by heading)
   format: "md",                  // Output format
   dataDir: "./src/routes/component-data"  // Directory with component JSON data
@@ -33,7 +33,7 @@ export default {
 
 Default values will be used if no config file is found:
 - srcDir: "./src/routes/docs"
-- outDir: "./src/routes/llm"
+- outDir: "./static/llm"
 - format: "md"
 - dataDir: "./src/routes/component-data"
 - ignore: [] (empty array)

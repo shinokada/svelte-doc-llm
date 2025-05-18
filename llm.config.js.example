@@ -3,7 +3,7 @@ module.exports = {
   srcDir: "./src/routes/docs",
   
   // Output directory for processed files
-  outDir: "./src/routes/llm",
+  outDir: "./static/llm",
   
   // Sections to ignore (by heading text)
   // ignore: ["## See also", "## References"],
