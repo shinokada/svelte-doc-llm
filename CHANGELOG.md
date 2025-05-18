@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.2.1
+
+### Patch Changes
+
+- fix: lower node engines
+
 ## 0.2.0
 
 ### Minor Changes
