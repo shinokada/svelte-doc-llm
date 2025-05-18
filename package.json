@@ -1,0 +1,44 @@
+{
+  "name": "svelte-doc-llm",
+  "version": "0.1.0",
+  "description": "Convert markdown documentation to LLM-friendly format",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "svelte-doc-llm": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "llm": "node ./index.js"
+  },
+  "keywords": [
+    "svelte",
+    "markdown",
+    "llm",
+    "documentation",
+    "converter"
+  ],
+  "author": {
+    "name": "Shinichi Okada",
+    "url": "https://codewithshin.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "glob": "^11.0.0",
+    "gray-matter": "^4.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shinokada/svelte-doc-llm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shinokada/svelte-doc-llm/issues"
+  },
+  "homepage": "https://github.com/shinokada/svelte-doc-llm#readme",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.4"
+  }
+}

@@ -1,0 +1,16 @@
+module.exports = {
+  // Directory containing markdown files to process
+  srcDir: "./src/routes/docs",
+  
+  // Output directory for processed files
+  outDir: "./src/routes/llm",
+  
+  // Sections to ignore (by heading text)
+  // ignore: ["## See also", "## References"],
+  
+  // Output format (currently only 'md' is supported)
+  format: "md",
+
+  // Directory containing component data
+  dataDir: "./src/routes/component-data",
+};
