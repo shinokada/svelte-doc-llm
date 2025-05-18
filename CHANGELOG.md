@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.2.2
+
+### Patch Changes
+
+- docs: README update
+
 ## 0.2.1
 
 ### Patch Changes
