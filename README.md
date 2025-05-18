@@ -33,12 +33,6 @@ export default {
 ```
 
 Default values will be used if no config file is found:
-- srcDir: "./src/routes/docs"
-- outDir: "./static/llm"
-- format: "md"
-- dataDir: "./src/routes/component-data"
-- ignore: [] (empty array)
-- cleanOutDir: true
 
 ## Features
 
