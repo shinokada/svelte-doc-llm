@@ -28,6 +28,7 @@ export default {
   ignore: ["## References"],     // Sections to remove (by heading)
   format: "md",                  // Output format
   dataDir: "./src/routes/component-data"  // Directory with component JSON data
+  cleanOutDir: true    // Whether to completely clean the output directory
 }
 ```
 
@@ -37,6 +38,7 @@ Default values will be used if no config file is found:
 - format: "md"
 - dataDir: "./src/routes/component-data"
 - ignore: [] (empty array)
+- cleanOutDir: true
 
 ## Features
 
