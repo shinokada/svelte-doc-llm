@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { loadConfig } from './lib/config.js';
-import { cleanDirectory } from './lib/fileSystem.js';
+import { cleanDirectory, cleanDirectoryCompletely } from './lib/fileSystem.js';
 import { processFiles } from './lib/converter.js';
 import path from 'path';
 import { glob } from 'glob';
@@ -18,18 +18,24 @@ async function main() {
   // Log the configuration being used
   console.log('Using configuration:', JSON.stringify(config, null, 2));
   
-  const { srcDir, outDir, format } = config;
+  const { srcDir, outDir, format, cleanOutDir } = config;
   
   // Create output directory if it doesn't exist
   const outputDirectory = path.resolve(process.cwd(), outDir);
   
-  // Clear files with matching format from output directory
+  // Clean output directory based on config option
   try {
-    console.log(`Cleaning files with .${format} extension from ${outputDirectory}...`);
-    await cleanDirectory(outputDirectory, format);
-    console.log('Cleaning complete.');
+    if (cleanOutDir) {
+      console.log(`Completely cleaning output directory: ${outputDirectory}...`);
+      await cleanDirectoryCompletely(outputDirectory);
+      console.log('Complete cleanup finished.');
+    } else {
+      console.log(`Cleaning only files with .${format} extension from ${outputDirectory}...`);
+      await cleanDirectory(outputDirectory, format);
+      console.log('Selective cleanup complete.');
+    }
   } catch (error) {
-    console.error(`Error cleaning files from ${outputDirectory}:`, error.message);
+    console.error(`Error cleaning output directory ${outputDirectory}:`, error.message);
     process.exit(1);
   }
   

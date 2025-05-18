@@ -1,16 +1,29 @@
-module.exports = {
-  // Directory containing markdown files to process
+/**
+ * Configuration for markdown-to-llm converter
+ */
+export default {
+  // Source directory for markdown files
   srcDir: "./src/routes/docs",
   
   // Output directory for processed files
-  outDir: "./static/llm",
+  outDir: "./src/routes/llm",
   
-  // Sections to ignore (by heading text)
-  // ignore: ["## See also", "## References"],
-  
-  // Output format (currently only 'md' is supported)
+  // Output file format
   format: "md",
-
-  // Directory containing component data
+  
+  // Directory for component data
   dataDir: "./src/routes/component-data",
+  
+  // Sections to ignore (can be string or array)
+  ignore: [
+    "Installation",
+    "Setup"
+  ],
+  
+  // Strip this prefix from output paths
+  stripPrefix: "docs",
+  
+  // Whether to completely clean the output directory (delete all files and subdirectories)
+  // instead of just deleting files with matching format
+  cleanOutDir: true
 };
