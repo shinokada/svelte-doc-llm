@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.2.0
+
+### Minor Changes
+
+- feat: add cleanOutDir option/config
+
 ## 0.1.2
 
 ### Patch Changes
