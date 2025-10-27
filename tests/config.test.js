@@ -36,13 +36,18 @@ describe('loadConfig', () => {
   });
 
   it('should throw error when required fields are missing', async () => {
-    // Test validation logic
-    const invalidConfig = {
-      srcDir: './src',
-      // Missing baseUrl, repo, pkgName
-    };
+    // Create config missing required fields
+    await fs.writeFile(
+      'llm.config.js',
+      `export default {
+        srcDir: './src'
+        // Missing baseUrl, repo, pkgName
+      };`
+    );
     
-    // This should throw with proper validation
-    // expect(() => validateConfig(invalidConfig)).toThrow();
+    await expect(loadConfig()).rejects.toThrow('Missing required configuration fields');
+    
+    // Cleanup
+    await fs.unlink('llm.config.js').catch(() => {});
   });
 });

@@ -41,16 +41,6 @@ describe('fileSystem utilities', () => {
       expect(stats.isDirectory()).toBe(true);
     });
   });
-  
-  it('should remove files regardless of extension case', async () => {
-      await fs.writeFile(path.join(testDir, 'a.MD'), 'x');
-      await fs.writeFile(path.join(testDir, 'b.md'), 'x');
-      await fs.writeFile(path.join(testDir, 'c.TXT'), 'x');
-      await cleanDirectory(testDir, 'mD');
-      await expect(fs.access(path.join(testDir, 'a.MD'))).rejects.toThrow();
-      await expect(fs.access(path.join(testDir, 'b.md'))).rejects.toThrow();
-      await expect(fs.access(path.join(testDir, 'c.TXT'))).resolves.toBeUndefined();
-    });
 
   describe('cleanDirectory', () => {
     it('should remove only files with specified format', async () => {
@@ -90,6 +80,16 @@ describe('fileSystem utilities', () => {
       
       const stats = await fs.stat(nonExistent);
       expect(stats.isDirectory()).toBe(true);
+    });
+
+    it('should remove files regardless of extension case', async () => {
+      await fs.writeFile(path.join(testDir, 'a.MD'), 'x');
+      await fs.writeFile(path.join(testDir, 'b.md'), 'x');
+      await fs.writeFile(path.join(testDir, 'c.TXT'), 'x');
+      await cleanDirectory(testDir, 'mD');
+      await expect(fs.access(path.join(testDir, 'a.MD'))).rejects.toThrow();
+      await expect(fs.access(path.join(testDir, 'b.md'))).rejects.toThrow();
+      await expect(fs.access(path.join(testDir, 'c.TXT'))).resolves.toBeUndefined();
     });
   });
 

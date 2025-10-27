@@ -3,15 +3,16 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
+import os from 'os';
 
 const execAsync = promisify(exec);
 
 describe('full workflow', () => {
-  const testProjectDir = path.resolve(process.cwd(), 'test-e2e-project');
+  let testProjectDir;
+  const prefix = path.join(os.tmpdir(), 'sdl-e2e-');
   
   beforeAll(async () => {
-    // Setup a minimal test project
-    await fs.mkdir(testProjectDir, { recursive: true });
+    testProjectDir = await fs.mkdtemp(prefix);
     await fs.mkdir(path.join(testProjectDir, 'src/routes/docs'), { recursive: true });
     
     // Create test config
@@ -54,7 +55,7 @@ Should remain.
     } catch {}
   });
 
-  it('should run complete conversion process', async () => {
+  it('should run complete conversion process (skipped until CLI is wired)', async () => {
     // This would need the CLI to be runnable
     // const { stdout } = await execAsync('node index.js', { cwd: testProjectDir });
     
