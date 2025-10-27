@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.3.0
+
+### Minor Changes
+
+- feat: add two exported converter functions (generateLlmsTxt, generateContextFull), a new include-files preprocessor to inline example snippets, stricter config validation with required fields, processFiles now returns file descriptors, processor regex improvements, and extensive Vitest test infra and tests.
+
 ## 0.2.2
 
 ### Patch Changes
