@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.5.1
+
+### Patch Changes
+
+- fix: publish problem
+
 ## 0.3.0
 
 ### Minor Changes

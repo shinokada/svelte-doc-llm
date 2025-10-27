@@ -1,6 +1,6 @@
 {
   "name": "svelte-doc-llm",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Convert markdown documentation to LLM-friendly format",
   "main": "index.js",
   "type": "module",
