@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`output snapshots > should match processed code block snapshot 1`] = `
+"
+\`\`\`svelte
+<script>
+  let count = 0;
+</script>
+
+<button on:click={() => count++}>
+  Count: {count}
+</button>
+\`\`\`
+"
+`;
+
+exports[`output snapshots > should match section removal snapshot 1`] = `
+"
+# Main Title
+
+## Introduction
+Some intro text
+
+## Usage
+How to use
+
+## API
+API documentation
+"
+`;
