@@ -62,3 +62,15 @@ Default values will be used if no config file is found:
 ## License
 
 MIT
+
+## Note for publishing a package
+
+```bash
+pnpm ch
+pnpm cv
+git add .
+git commit -m "v0.5.1"
+git push
+pnpm changeset publish
+git push --tags
+```
