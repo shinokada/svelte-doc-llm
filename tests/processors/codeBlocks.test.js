@@ -2,9 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { processCodeBlocks, removeScriptSection } from '../../lib/processors/codeBlocks.js';
 
 describe('processCodeBlocks', () => {
-  it('should normalize svelte code blocks with attributes', () => {
-    const input = '```svelte example hideScript\ncode here\n```';
-    const expected = '```svelte\ncode here\n```';
+  it.each([
+    ['```svelte example hideScript\nx\n```', '```svelte\nx\n```'],
+    ['```svelte\tfoo\nx\n```', '```svelte\nx\n```'],
+    ['```svelte   \nx\n```', '```svelte\nx\n```'],
+  ])('normalizes svelte fences (%#)', (input, expected) => {
     expect(processCodeBlocks(input)).toBe(expected);
   });
 

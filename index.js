@@ -44,7 +44,7 @@ async function main() {
   const mdPattern = path.join(sourceDirectory, '**/*.md');
 
   try {
-    const files = await glob(mdPattern);
+    const files = await glob(mdPattern, { nodir: true });
 
     console.log(`Found ${files.length} markdown files to process`);
 
@@ -53,6 +53,10 @@ async function main() {
 
     console.log('Conversion complete!');
 
+    if (processedFiles.length === 0) {
+      console.warn('No files processed. Skipping llms.txt and context-full.txt generation.');
+      return;
+    }
     // Generate llms.txt file
     console.log('Generating llms.txt...');
     await generateLlmsTxt(processedFiles, config);

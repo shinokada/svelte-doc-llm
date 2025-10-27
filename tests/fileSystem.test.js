@@ -2,11 +2,14 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { cleanDirectory, cleanDirectoryCompletely, ensureDirectoryExists } from '../lib/fileSystem.js';
 import fs from 'fs/promises';
 import path from 'path';
-
+import os from 'os';
+  
 describe('fileSystem utilities', () => {
-  const testDir = path.resolve(process.cwd(), 'test-temp-dir');
+  const testDirRoot = path.resolve(os.tmpdir(), 'sdl-e2e-');
+  let testDir;
   
   beforeEach(async () => {
+    testDir = await fs.mkdtemp(testDirRoot);
     await ensureDirectoryExists(testDir);
   });
 
@@ -38,6 +41,16 @@ describe('fileSystem utilities', () => {
       expect(stats.isDirectory()).toBe(true);
     });
   });
+  
+  it('should remove files regardless of extension case', async () => {
+      await fs.writeFile(path.join(testDir, 'a.MD'), 'x');
+      await fs.writeFile(path.join(testDir, 'b.md'), 'x');
+      await fs.writeFile(path.join(testDir, 'c.TXT'), 'x');
+      await cleanDirectory(testDir, 'mD');
+      await expect(fs.access(path.join(testDir, 'a.MD'))).rejects.toThrow();
+      await expect(fs.access(path.join(testDir, 'b.md'))).rejects.toThrow();
+      await expect(fs.access(path.join(testDir, 'c.TXT'))).resolves.toBeUndefined();
+    });
 
   describe('cleanDirectory', () => {
     it('should remove only files with specified format', async () => {

@@ -26,11 +26,13 @@ export default {
   // Whether to completely clean the output directory (delete all files and subdirectories)
   cleanOutDir: true,
   
-  // Base URL for documentation (REQUIRED for llms.txt)
-  baseUrl: 'https://flowbite-svelte.com/llm',  // Add this!
+  // Base URL where the contents of `outDir` are served (REQUIRED for llms.txt).
+  // It should resolve to the deployed path of ./static/llm.
+  // Trailing slash is optional; the tool will normalize it.
+  baseUrl: 'https://flowbite-svelte.com/llm',  
   
   // Repository URL (REQUIRED for llms.txt)
-  repo: 'https://github.com/themesberg/flowbite-svelte',  // Add this!
+  repo: 'https://github.com/themesberg/flowbite-svelte',  
   
   // Order for concatenating files in context-full.txt
   contextOrder: ['pages', 'components', 'forms', 'typography', 'extend', 'utilities'],
