@@ -1,13 +1,17 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { cleanDirectory, cleanDirectoryCompletely, ensureDirectoryExists } from '../lib/fileSystem.js';
+import {
+  cleanDirectory,
+  cleanDirectoryCompletely,
+  ensureDirectoryExists
+} from '../lib/fileSystem.js';
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
-  
+
 describe('fileSystem utilities', () => {
   const testDirRoot = path.resolve(os.tmpdir(), 'sdl-e2e-');
   let testDir;
-  
+
   beforeEach(async () => {
     testDir = await fs.mkdtemp(testDirRoot);
     await ensureDirectoryExists(testDir);
@@ -16,14 +20,16 @@ describe('fileSystem utilities', () => {
   afterEach(async () => {
     try {
       await fs.rm(testDir, { recursive: true, force: true });
-    } catch {}
+    } catch (err) {
+      console.warn('Cleanup failed:', err);
+    }
   });
 
   describe('ensureDirectoryExists', () => {
     it('should create directory if it does not exist', async () => {
       const newDir = path.join(testDir, 'new-folder');
       await ensureDirectoryExists(newDir);
-      
+
       const stats = await fs.stat(newDir);
       expect(stats.isDirectory()).toBe(true);
     });
@@ -36,7 +42,7 @@ describe('fileSystem utilities', () => {
     it('should create nested directories', async () => {
       const nestedDir = path.join(testDir, 'level1', 'level2', 'level3');
       await ensureDirectoryExists(nestedDir);
-      
+
       const stats = await fs.stat(nestedDir);
       expect(stats.isDirectory()).toBe(true);
     });
@@ -48,13 +54,13 @@ describe('fileSystem utilities', () => {
       await fs.writeFile(path.join(testDir, 'file1.md'), 'content');
       await fs.writeFile(path.join(testDir, 'file2.txt'), 'content');
       await fs.writeFile(path.join(testDir, 'file3.md'), 'content');
-      
+
       await cleanDirectory(testDir, 'md');
-      
+
       // Check .md files are removed
       await expect(fs.access(path.join(testDir, 'file1.md'))).rejects.toThrow();
       await expect(fs.access(path.join(testDir, 'file3.md'))).rejects.toThrow();
-      
+
       // Check .txt file remains
       await expect(fs.access(path.join(testDir, 'file2.txt'))).resolves.toBeUndefined();
     });
@@ -63,12 +69,12 @@ describe('fileSystem utilities', () => {
       const subDir = path.join(testDir, 'subdir');
       await ensureDirectoryExists(subDir);
       await fs.writeFile(path.join(subDir, 'nested.md'), 'content');
-      
+
       await cleanDirectory(testDir, 'md');
-      
+
       // Check nested .md file is removed
       await expect(fs.access(path.join(subDir, 'nested.md'))).rejects.toThrow();
-      
+
       // Check subdirectory still exists
       const stats = await fs.stat(subDir);
       expect(stats.isDirectory()).toBe(true);
@@ -77,7 +83,7 @@ describe('fileSystem utilities', () => {
     it('should create directory if it does not exist', async () => {
       const nonExistent = path.join(testDir, 'non-existent');
       await cleanDirectory(nonExistent, 'md');
-      
+
       const stats = await fs.stat(nonExistent);
       expect(stats.isDirectory()).toBe(true);
     });
@@ -98,13 +104,13 @@ describe('fileSystem utilities', () => {
       // Create structure
       await fs.writeFile(path.join(testDir, 'file1.md'), 'content');
       await fs.writeFile(path.join(testDir, 'file2.txt'), 'content');
-      
+
       const subDir = path.join(testDir, 'subdir');
       await ensureDirectoryExists(subDir);
       await fs.writeFile(path.join(subDir, 'nested.md'), 'content');
-      
+
       await cleanDirectoryCompletely(testDir);
-      
+
       // Check all files are removed
       const files = await fs.readdir(testDir);
       expect(files).toHaveLength(0);
@@ -113,7 +119,7 @@ describe('fileSystem utilities', () => {
     it('should create directory if it does not exist', async () => {
       const nonExistent = path.join(testDir, 'non-existent-clean');
       const result = await cleanDirectoryCompletely(nonExistent);
-      
+
       expect(result).toBe(true);
       const stats = await fs.stat(nonExistent);
       expect(stats.isDirectory()).toBe(true);
