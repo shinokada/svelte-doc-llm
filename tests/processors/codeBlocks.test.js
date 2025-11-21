@@ -5,7 +5,7 @@ describe('processCodeBlocks', () => {
   it.each([
     ['```svelte example hideScript\nx\n```', '```svelte\nx\n```'],
     ['```svelte\tfoo\nx\n```', '```svelte\nx\n```'],
-    ['```svelte   \nx\n```', '```svelte\nx\n```'],
+    ['```svelte   \nx\n```', '```svelte\nx\n```']
   ])('normalizes svelte fences (%#)', (input, expected) => {
     expect(processCodeBlocks(input)).toBe(expected);
   });
@@ -37,13 +37,13 @@ code 2
 describe('removeScriptSection', () => {
   it('should remove script tags with lang attribute', () => {
     const input = '<script lang="ts">\nconst x = 1;\n</script>\n\nContent here';
-    const expected = 'Content here';  // Changed: no leading newline
+    const expected = 'Content here'; // Changed: no leading newline
     expect(removeScriptSection(input)).toBe(expected);
   });
 
   it('should remove script tags without attributes', () => {
     const input = '<script>\nconst x = 1;\n</script>\n\nContent';
-    const expected = 'Content';  // Changed: no leading newline
+    const expected = 'Content'; // Changed: no leading newline
     expect(removeScriptSection(input)).toBe(expected);
   });
 

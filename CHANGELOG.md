@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.6.0
+
+### Minor Changes
+
+- fix: seealso and add debug scripts
+
 ## 0.5.1
 
 ### Patch Changes

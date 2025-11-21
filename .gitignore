@@ -1,5 +1,4 @@
 src
 node_modules
 static
-llm.config.js
 .DS_Store

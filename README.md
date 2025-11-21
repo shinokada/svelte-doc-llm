@@ -23,22 +23,22 @@ Configuration can be provided in a `llm.config.js` file:
 
 ```javascript
 export default {
-    srcDir: "./src/routes/docs", // Input directory with markdown files
-    outDir: "./static/llm", // Output directory for processed files
-    format: "md", // Output format
-    dataDir: "./src/routes/component-data", // Directory with component JSON data
-    ignore: [], // Sections to remove (by heading)
-    stripPrefix: "docs",
-    cleanOutDir: true, // Whether to completely clean the output directory
-    // Required fields - must be provided in llm.config.js
-    baseUrl: null,
-    repo: null,
-    pkgName: null,
-    // Optional fields
-    contextOrder: ['pages', 'components', 'forms', 'typography', 'extend', 'utilities'],
-    docsDir: 'src/routes',
-    examplesDir: 'src/routes/docs-examples'
-}
+  srcDir: './src/routes/docs', // Input directory with markdown files
+  outDir: './static/llm', // Output directory for processed files
+  format: 'md', // Output format
+  dataDir: './src/routes/component-data', // Directory with component JSON data
+  ignore: [], // Sections to remove (by heading)
+  stripPrefix: 'docs',
+  cleanOutDir: true, // Whether to completely clean the output directory
+  // Required fields - must be provided in llm.config.js
+  baseUrl: null,
+  repo: null,
+  pkgName: null,
+  // Optional fields
+  contextOrder: ['pages', 'components', 'forms', 'typography', 'extend', 'utilities'],
+  docsDir: 'src/routes',
+  examplesDir: 'src/routes/docs-examples'
+};
 ```
 
 Default values will be used if no config file is found:
