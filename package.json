@@ -9,12 +9,12 @@
   },
   "scripts": {
     "llm": "node ./index.js",
-    "debug:seealso": "DEBUGSEEALSO=true node ./index.js",
-    "debug:component": "DEBUGCOMPONENT=true node ./index.js",
-    "debug:converter": "DEBUGCONVERTER=true node ./index.js",
-    "debug:filesystem": "DEBUGFILESYSTEM=true node ./index.js",
-    "debug:config": "DEBUGCONFIG=true node ./index.js",
-    "debug": "DEBUG=true DEBUGCOMPONENT=true DEBUGSEEALSO=true DEBUGCONVERTER=true DEBUGFILESYSTEM=true DEBUGCONFIG=true node ./index.js",
+    "debug:seealso": "cross-env DEBUGSEEALSO=true node ./index.js",
+    "debug:component": "cross-env DEBUGCOMPONENT=true node ./index.js",
+    "debug:converter": "cross-env DEBUGCONVERTER=true node ./index.js",
+    "debug:filesystem": "cross-env DEBUGFILESYSTEM=true node ./index.js",
+    "debug:config": "cross-env DEBUGCONFIG=true node ./index.js",
+    "debug": "cross-env DEBUG=true DEBUGCOMPONENT=true DEBUGSEEALSO=true DEBUGCONVERTER=true DEBUGFILESYSTEM=true DEBUGCONFIG=true node ./index.js",
     "ch": "npx changeset",
     "cv": "npx changeset version",
     "cp": "npx changeset publish",
@@ -55,6 +55,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.4",
     "@vitest/ui": "^4.0.3",
+    "cross-env": "^10.1.0",
     "vitest": "^4.0.3"
   }
 }
