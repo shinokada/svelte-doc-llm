@@ -4,6 +4,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 
+// Note: Tests in this file modify process.cwd() and must run serially
+// The global vitest.config.js already sets sequence.concurrent = false
 describe('loadConfig', () => {
   const configPath = path.resolve(process.cwd(), 'llm.config.js');
   let originalConfig = null;
@@ -72,17 +74,25 @@ describe('loadConfig', () => {
     // Create a temporary directory for isolated test
     testDir = await fs.mkdtemp(path.join(os.tmpdir(), 'config-test-'));
     originalCwd = process.cwd();
-    process.chdir(testDir);
 
-    // Create config missing required fields in the temp directory
-    await fs.writeFile(
-      path.join(testDir, 'llm.config.js'),
-      `export default {
-        srcDir: './src'
-        // Missing baseUrl, repo, pkgName
-      };`
-    );
+    try {
+      process.chdir(testDir);
 
-    await expect(loadConfig()).rejects.toThrow('Missing required configuration fields');
+      // Create config missing required fields in the temp directory
+      await fs.writeFile(
+        path.join(testDir, 'llm.config.js'),
+        `export default {
+          srcDir: './src'
+          // Missing baseUrl, repo, pkgName
+        };`
+      );
+
+      await expect(loadConfig()).rejects.toThrow('Missing required configuration fields');
+    } finally {
+      // Ensure we always restore cwd even if test fails
+      if (originalCwd) {
+        process.chdir(originalCwd);
+      }
+    }
   });
 });

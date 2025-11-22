@@ -128,11 +128,11 @@ describe('fileSystem utilities', () => {
     it('should preserve ignored directories at top level', async () => {
       // Create structure
       await fs.writeFile(path.join(testDir, 'file1.md'), 'content');
-      
+
       const ignoredDir = path.join(testDir, '[...slug]');
       await ensureDirectoryExists(ignoredDir);
       await fs.writeFile(path.join(ignoredDir, 'preserved.md'), 'content');
-      
+
       const normalDir = path.join(testDir, 'normal');
       await ensureDirectoryExists(normalDir);
       await fs.writeFile(path.join(normalDir, 'removed.md'), 'content');
@@ -143,7 +143,7 @@ describe('fileSystem utilities', () => {
       const stats = await fs.stat(ignoredDir);
       expect(stats.isDirectory()).toBe(true);
       await expect(fs.access(path.join(ignoredDir, 'preserved.md'))).resolves.toBeUndefined();
-      
+
       // Check other files and directories are removed
       await expect(fs.access(path.join(testDir, 'file1.md'))).rejects.toThrow();
       await expect(fs.access(normalDir)).rejects.toThrow();
@@ -154,10 +154,10 @@ describe('fileSystem utilities', () => {
       const parentDir = path.join(testDir, 'parent');
       const childDir = path.join(parentDir, 'child');
       const ignoredDir = path.join(childDir, '[...slug]');
-      
+
       await ensureDirectoryExists(ignoredDir);
       await fs.writeFile(path.join(ignoredDir, 'preserved.md'), 'nested content');
-      
+
       // Add some files to be deleted
       await fs.writeFile(path.join(parentDir, 'delete-me.md'), 'content');
       await fs.writeFile(path.join(childDir, 'also-delete.md'), 'content');
@@ -168,11 +168,11 @@ describe('fileSystem utilities', () => {
       const stats = await fs.stat(ignoredDir);
       expect(stats.isDirectory()).toBe(true);
       await expect(fs.access(path.join(ignoredDir, 'preserved.md'))).resolves.toBeUndefined();
-      
+
       // Check parent directories are kept because they contain the ignored dir
       await expect(fs.access(parentDir)).resolves.toBeUndefined();
       await expect(fs.access(childDir)).resolves.toBeUndefined();
-      
+
       // Check other files are removed
       await expect(fs.access(path.join(parentDir, 'delete-me.md'))).rejects.toThrow();
       await expect(fs.access(path.join(childDir, 'also-delete.md'))).rejects.toThrow();
@@ -183,11 +183,11 @@ describe('fileSystem utilities', () => {
       const ignored1 = path.join(testDir, '[...slug]');
       const ignored2 = path.join(testDir, 'custom-dir');
       const normal = path.join(testDir, 'normal');
-      
+
       await ensureDirectoryExists(ignored1);
       await ensureDirectoryExists(ignored2);
       await ensureDirectoryExists(normal);
-      
+
       await fs.writeFile(path.join(ignored1, 'file1.md'), 'content');
       await fs.writeFile(path.join(ignored2, 'file2.md'), 'content');
       await fs.writeFile(path.join(normal, 'file3.md'), 'content');
@@ -199,7 +199,7 @@ describe('fileSystem utilities', () => {
       await expect(fs.access(ignored2)).resolves.toBeUndefined();
       await expect(fs.access(path.join(ignored1, 'file1.md'))).resolves.toBeUndefined();
       await expect(fs.access(path.join(ignored2, 'file2.md'))).resolves.toBeUndefined();
-      
+
       // Check normal directory is removed
       await expect(fs.access(normal)).rejects.toThrow();
     });
