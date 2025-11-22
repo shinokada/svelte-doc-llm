@@ -22,7 +22,7 @@ async function main() {
     console.log('Using configuration:', JSON.stringify(config, null, 2));
   }
 
-  const { srcDir, outDir, format, cleanOutDir } = config;
+  const { srcDir, outDir, format, cleanOutDir, ignoreDirs } = config;
 
   // Create output directory if it doesn't exist
   const outputDirectory = path.resolve(process.cwd(), outDir);
@@ -32,8 +32,11 @@ async function main() {
     if (cleanOutDir) {
       if (DEBUG) {
         console.log(`Completely cleaning output directory: ${outputDirectory}...`);
+        if (ignoreDirs.length > 0) {
+          console.log(`Preserving directories: ${ignoreDirs.join(', ')}`);
+        }
       }
-      await cleanDirectoryCompletely(outputDirectory);
+      await cleanDirectoryCompletely(outputDirectory, ignoreDirs);
       if (DEBUG) {
         console.log('Complete cleanup finished.');
       }
