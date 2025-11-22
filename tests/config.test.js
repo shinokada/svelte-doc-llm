@@ -46,12 +46,6 @@ describe('loadConfig', () => {
       }
       testDir = null;
     }
-
-    // Clear CommonJS module cache when available; ESM imports are unaffected
-    if (typeof require !== 'undefined' && require.cache) {
-      const moduleId = path.resolve(process.cwd(), 'llm.config.js');
-      delete require.cache[moduleId];
-    }
   });
 
   it('should load and merge config from llm.config.js', async () => {
