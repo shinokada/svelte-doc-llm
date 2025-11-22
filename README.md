@@ -24,12 +24,13 @@ Configuration can be provided in a `llm.config.js` file:
 ```javascript
 export default {
   srcDir: './src/routes/docs', // Input directory with markdown files
-  outDir: './static/llm', // Output directory for processed files
+  outDir: './src/routes/llm', // Output directory for processed files
   format: 'md', // Output format
   dataDir: './src/routes/component-data', // Directory with component JSON data
   ignore: [], // Sections to remove (by heading)
   stripPrefix: 'docs',
   cleanOutDir: true, // Whether to completely clean the output directory
+  ignoreDirs: [], // Directory names to preserve at any nesting level (e.g., ['[...slug]'])
   // Required fields - must be provided in llm.config.js
   baseUrl: null,
   repo: null,

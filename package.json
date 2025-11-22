@@ -25,7 +25,6 @@
     "test": "vitest",
     "test:unit": "vitest run tests/processors tests/config.test.js tests/fileSystem.test.js",
     "test:integration": "vitest run tests/integration",
-    "test:e2e": "vitest run tests/e2e",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage"
   },
