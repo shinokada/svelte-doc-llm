@@ -30,7 +30,7 @@ export default {
   ignore: [], // Sections to remove (by heading)
   stripPrefix: 'docs',
   cleanOutDir: true, // Whether to completely clean the output directory
-  ignoreDirs: [], // Directories to preserve during cleaning (e.g., ['[...slug]'])
+  ignoreDirs: [], // Directory names to preserve at any nesting level (e.g., ['[...slug]'])
   // Required fields - must be provided in llm.config.js
   baseUrl: null,
   repo: null,

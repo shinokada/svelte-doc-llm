@@ -27,10 +27,8 @@ export default {
   cleanOutDir: true,
   
   // Directories to preserve in the output directory during cleaning (e.g., dynamic routes)
-  ignoreDirs: [],
-  // example: ignoreDirs: ["[...slug]", "custom-dir", "another-dir"]
-  // example: ignoreDirs: "[...slug]", 
-  // example: ignoreDirs: ["[...slug]"],
+  // Matches directory names at any nesting level within outDir
+  ignoreDirs: ['[...slug]'], // Can also be provided as a single string; loader normalizes to array
   
   // Base URL for documentation (REQUIRED for llms.txt)
   baseUrl: 'https://flowbite-svelte.com/llm', 

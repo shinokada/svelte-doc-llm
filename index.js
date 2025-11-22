@@ -22,7 +22,7 @@ async function main() {
     console.log('Using configuration:', JSON.stringify(config, null, 2));
   }
 
-  const { srcDir, outDir, format, cleanOutDir, ignoreDirs } = config;
+  const { srcDir, outDir, format, cleanOutDir, ignoreDirs = [] } = config;
 
   // Create output directory if it doesn't exist
   const outputDirectory = path.resolve(process.cwd(), outDir);
