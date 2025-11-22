@@ -30,13 +30,13 @@ describe('loadConfig', () => {
     } catch (err) {
       // Ignore cleanup errors
     }
-    
+
     // Restore original working directory if changed
     if (originalCwd) {
       process.chdir(originalCwd);
       originalCwd = null;
     }
-    
+
     // Clean up test directory
     if (testDir) {
       try {
@@ -46,10 +46,12 @@ describe('loadConfig', () => {
       }
       testDir = null;
     }
-    
-    // Clear module cache to ensure fresh imports
-    const moduleId = path.resolve(process.cwd(), 'llm.config.js');
-    delete require.cache[moduleId];
+
+    // Clear CommonJS module cache when available; ESM imports are unaffected
+    if (typeof require !== 'undefined' && require.cache) {
+      const moduleId = path.resolve(process.cwd(), 'llm.config.js');
+      delete require.cache[moduleId];
+    }
   });
 
   it('should load and merge config from llm.config.js', async () => {
@@ -66,7 +68,7 @@ describe('loadConfig', () => {
 
   it('should normalize ignore field to array', async () => {
     const config = await loadConfig();
-    
+
     // The ignore field should always be normalized to an array
     expect(Array.isArray(config.ignore)).toBe(true);
     expect(Array.isArray(config.ignoreDirs)).toBe(true);
@@ -77,7 +79,7 @@ describe('loadConfig', () => {
     testDir = await fs.mkdtemp(path.join(os.tmpdir(), 'config-test-'));
     originalCwd = process.cwd();
     process.chdir(testDir);
-    
+
     // Create config missing required fields in the temp directory
     await fs.writeFile(
       path.join(testDir, 'llm.config.js'),
