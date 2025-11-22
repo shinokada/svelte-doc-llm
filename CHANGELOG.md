@@ -1,5 +1,11 @@
 # svelte-doc-llm
 
+## 0.6.1
+
+### Patch Changes
+
+- fix: remove hash fragments from seeAlso links
+
 ## 0.6.0
 
 ### Minor Changes
