@@ -19,12 +19,13 @@ const files = [
 let passed = 0;
 let failed = 0;
 
-function test(name, options, expectedCount, expectedFiles) {
+function test(name, options, expectedFiles) {
   try {
     const result = filterFilesByOptions(files, options, mockSrcDir);
     
-    if (result.length !== expectedCount) {
-      throw new Error(`Expected ${expectedCount} files, got ${result.length}`);
+    // Use expectedFiles.length for the count
+    if (result.length !== expectedFiles.length) {
+      throw new Error(`Expected ${expectedFiles.length} files, got ${result.length}`);
     }
     
     for (const expectedFile of expectedFiles) {
@@ -47,36 +48,43 @@ function test(name, options, expectedCount, expectedFiles) {
 test(
   'Match file with exact extension',
   { directories: [], files: ['components/alert.md'] },
-  1,
   ['components/alert.md']
 );
 
 test(
   'Match file without extension',
   { directories: [], files: ['components/alert'] },
-  1,
   ['components/alert.md']
 );
 
 test(
   'Match multiple files with extensions',
   { directories: [], files: ['components/alert.md', 'forms/input.md'] },
-  2,
   ['components/alert.md', 'forms/input.md']
 );
 
 test(
   'Match multiple files without extensions',
   { directories: [], files: ['components/alert', 'forms/input'] },
-  2,
   ['components/alert.md', 'forms/input.md']
 );
 
 test(
   'Match mixed (with and without extensions)',
   { directories: [], files: ['components/alert.md', 'forms/input'] },
-  2,
   ['components/alert.md', 'forms/input.md']
+);
+
+test(
+  'Match files in directory (Directory filter case)',
+  { directories: ['components'], files: [] }, // Filter by directory 'components'
+  ['components/alert.md', 'components/button.md']
+);
+
+test(
+  'No files match (No matches case)',
+  { directories: [], files: ['non-existent-file.js', 'another-non-match'] },
+  [] // Expect an empty array
 );
 
 // Summary
