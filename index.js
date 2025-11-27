@@ -97,7 +97,7 @@ async function main() {
   const mdPattern = path.join(sourceDirectory, '**/*.md');
 
   try {
-    let allFiles = await glob(mdPattern, { nodir: true });
+    const allFiles = await glob(mdPattern, { nodir: true });
 
     if (DEBUG) {
       console.log(`Found ${allFiles.length} total markdown files`);

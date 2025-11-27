@@ -32,9 +32,15 @@ test('parseArgs handles no arguments', () => {
   const options = parseArgs();
   process.argv = originalArgv;
   
-  if (options.directories.length !== 0) throw new Error('Expected empty directories');
-  if (options.files.length !== 0) throw new Error('Expected empty files');
-  if (options.skipClean !== false) throw new Error('Expected skipClean to be false');
+  if (options.directories.length !== 0) {
+    throw new Error('Expected empty directories');
+  }
+  if (options.files.length !== 0) {
+    throw new Error('Expected empty files');
+  }
+  if (options.skipClean !== false) {
+    throw new Error('Expected skipClean to be false');
+  }
 });
 
 // Test 2: parseArgs with -d flag
@@ -44,9 +50,15 @@ test('parseArgs handles -d flag', () => {
   const options = parseArgs();
   process.argv = originalArgv;
   
-  if (options.directories.length !== 2) throw new Error('Expected 2 directories');
-  if (options.directories[0] !== 'components') throw new Error('Expected components');
-  if (options.directories[1] !== 'forms') throw new Error('Expected forms');
+  if (options.directories.length !== 2) {
+    throw new Error('Expected 2 directories');
+  }
+  if (options.directories[0] !== 'components') {
+    throw new Error('Expected components');
+  }
+  if (options.directories[1] !== 'forms') {
+    throw new Error('Expected forms');
+  }
 });
 
 // Test 3: parseArgs with -f flag
@@ -56,8 +68,12 @@ test('parseArgs handles -f flag', () => {
   const options = parseArgs();
   process.argv = originalArgv;
   
-  if (options.files.length !== 1) throw new Error('Expected 1 file');
-  if (options.files[0] !== 'test.md') throw new Error('Expected test.md');
+  if (options.files.length !== 1) {
+    throw new Error('Expected 1 file');
+  }
+  if (options.files[0] !== 'test.md') {
+    throw new Error('Expected test.md');
+  }
 });
 
 // Test 4: parseArgs with --skip-clean
@@ -67,7 +83,9 @@ test('parseArgs handles --skip-clean flag', () => {
   const options = parseArgs();
   process.argv = originalArgv;
   
-  if (options.skipClean !== true) throw new Error('Expected skipClean to be true');
+  if (options.skipClean !== true) {
+    throw new Error('Expected skipClean to be true');
+  }
 });
 
 // Test 5: validateOptions with valid paths
@@ -77,7 +95,9 @@ test('validateOptions accepts valid paths', () => {
     files: ['test.md', 'docs/guide.md']
   };
   
-  if (!validateOptions(options)) throw new Error('Expected validation to pass');
+  if (!validateOptions(options)) {
+    throw new Error('Expected validation to pass');
+  }
 });
 
 // Test 6: validateOptions with invalid characters
@@ -87,7 +107,9 @@ test('validateOptions rejects invalid characters', () => {
     files: []
   };
   
-  if (validateOptions(options)) throw new Error('Expected validation to fail');
+  if (validateOptions(options)) {
+    throw new Error('Expected validation to fail');
+  }
 });
 
 // Test 7: filterFilesByOptions with no filters
@@ -97,7 +119,9 @@ test('filterFilesByOptions returns all files when no filters', () => {
   const srcDir = '/src/docs';
   
   const filtered = filterFilesByOptions(files, options, srcDir);
-  if (filtered.length !== 2) throw new Error('Expected all files to be returned');
+  if (filtered.length !== 2) {
+    throw new Error('Expected all files to be returned');
+  }
 });
 
 // Test 8: filterFilesByOptions with directory filter
@@ -111,7 +135,9 @@ test('filterFilesByOptions filters by directory', () => {
   const srcDir = '/src/docs';
   
   const filtered = filterFilesByOptions(files, options, srcDir);
-  if (filtered.length !== 2) throw new Error(`Expected 2 files, got ${filtered.length}`);
+  if (filtered.length !== 2) {
+    throw new Error(`Expected 2 files, got ${filtered.length}`);
+  }
 });
 
 // Test 9: Combined directory and file filter
@@ -129,7 +155,9 @@ test('filterFilesByOptions handles combined filters', () => {
   const srcDir = '/src/docs';
   
   const filtered = filterFilesByOptions(files, options, srcDir);
-  if (filtered.length !== 3) throw new Error(`Expected 3 files, got ${filtered.length}`);
+  if (filtered.length !== 3) {
+    throw new Error(`Expected 3 files, got ${filtered.length}`);
+  }
 });
 
 // Summary
