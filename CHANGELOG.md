@@ -1,5 +1,40 @@
 # svelte-doc-llm
 
+## 0.8.0
+
+### Minor Changes
+
+- **feat: Add CLI options for selective processing** - Major new feature adding command-line arguments for targeted documentation conversion
+  
+  New CLI options:
+  - `-d, --directories <dir1> <dir2> ...` - Convert only specified directories
+  - `-f, --files <file1> <file2> ...` - Convert only specified files  
+  - `--skip-clean` - Skip cleanup phase for incremental updates
+  - `-h, --help` - Display help message
+  
+  Benefits:
+  - Faster iteration during development (convert only what you're working on)
+  - Selective rebuilds in CI/CD pipelines
+  - Better control over cleanup behavior
+  - Mix and match directories and files in a single command
+  
+  Examples:
+  ```bash
+  # Convert only components directory
+  svelte-doc-llm -d components
+  
+  # Convert specific files
+  svelte-doc-llm -f components/alert.md forms/input.md
+  
+  # Mix both approaches
+  svelte-doc-llm -d typography -f components/alert.md
+  
+  # Skip cleanup for incremental updates
+  svelte-doc-llm -d components --skip-clean
+  ```
+  
+  In selective mode, `llms.txt` and `context-full.txt` are regenerated with only the processed files, and cleanup is targeted to only matching output files.
+
 ## 0.7.0
 
 ### Minor Changes
@@ -27,51 +62,3 @@
 ### Patch Changes
 
 - fix: remove hash fragments from seeAlso links
-
-## 0.6.0
-
-### Minor Changes
-
-- fix: seealso and add debug scripts
-
-## 0.5.1
-
-### Patch Changes
-
-- fix: publish problem
-
-## 0.3.0
-
-### Minor Changes
-
-- feat: add two exported converter functions (generateLlmsTxt, generateContextFull), a new include-files preprocessor to inline example snippets, stricter config validation with required fields, processFiles now returns file descriptors, processor regex improvements, and extensive Vitest test infra and tests.
-
-## 0.2.2
-
-### Patch Changes
-
-- docs: README update
-
-## 0.2.1
-
-### Patch Changes
-
-- fix: lower node engines
-
-## 0.2.0
-
-### Minor Changes
-
-- feat: add cleanOutDir option/config
-
-## 0.1.2
-
-### Patch Changes
-
-- fix: outDir to static
-
-## 0.1.1
-
-### Patch Changes
-
-- fix: update .gitignore
