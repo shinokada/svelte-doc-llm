@@ -56,7 +56,11 @@ describe('CLI Argument Parser', () => {
     it('should parse -f flag with multiple files', () => {
       setArgs('-f', 'components/alert.md', 'components/button.md', 'forms/input.md');
       const options = parseArgs();
-      expect(options.files).toEqual(['components/alert.md', 'components/button.md', 'forms/input.md']);
+      expect(options.files).toEqual([
+        'components/alert.md',
+        'components/button.md',
+        'forms/input.md'
+      ]);
     });
 
     it('should parse --files flag', () => {
@@ -113,7 +117,7 @@ describe('CLI Argument Parser', () => {
     });
 
     it('should validate valid directory paths', () => {
-      const options = { 
+      const options = {
         directories: ['components', 'forms/advanced', 'docs/guides'],
         files: []
       };

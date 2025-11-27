@@ -22,19 +22,19 @@ let failed = 0;
 function test(name, options, expectedFiles) {
   try {
     const result = filterFilesByOptions(files, options, mockSrcDir);
-    
+
     // Use expectedFiles.length for the count
     if (result.length !== expectedFiles.length) {
       throw new Error(`Expected ${expectedFiles.length} files, got ${result.length}`);
     }
-    
+
     for (const expectedFile of expectedFiles) {
       const fullPath = path.join(mockSrcDir, expectedFile);
       if (!result.includes(fullPath)) {
         throw new Error(`Expected to find ${expectedFile}`);
       }
     }
-    
+
     console.log(`✅ ${name}`);
     passed++;
   } catch (error) {
@@ -45,17 +45,13 @@ function test(name, options, expectedFiles) {
 }
 
 // Test cases
-test(
-  'Match file with exact extension',
-  { directories: [], files: ['components/alert.md'] },
-  ['components/alert.md']
-);
+test('Match file with exact extension', { directories: [], files: ['components/alert.md'] }, [
+  'components/alert.md'
+]);
 
-test(
-  'Match file without extension',
-  { directories: [], files: ['components/alert'] },
-  ['components/alert.md']
-);
+test('Match file without extension', { directories: [], files: ['components/alert'] }, [
+  'components/alert.md'
+]);
 
 test(
   'Match multiple files with extensions',

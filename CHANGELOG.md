@@ -4,35 +4,42 @@
 
 ### Minor Changes
 
+- feat: add CLI selective processing
+
+## 0.8.0
+
+### Minor Changes
+
 - **feat: Add CLI options for selective processing** - Major new feature adding command-line arguments for targeted documentation conversion
-  
+
   New CLI options:
   - `-d, --directories <dir1> <dir2> ...` - Convert only specified directories
-  - `-f, --files <file1> <file2> ...` - Convert only specified files  
+  - `-f, --files <file1> <file2> ...` - Convert only specified files
   - `--skip-clean` - Skip cleanup phase for incremental updates
   - `-h, --help` - Display help message
-  
+
   Benefits:
   - Faster iteration during development (convert only what you're working on)
   - Selective rebuilds in CI/CD pipelines
   - Better control over cleanup behavior
   - Mix and match directories and files in a single command
-  
+
   Examples:
+
   ```bash
   # Convert only components directory
   svelte-doc-llm -d components
-  
+
   # Convert specific files
   svelte-doc-llm -f components/alert.md forms/input.md
-  
+
   # Mix both approaches
   svelte-doc-llm -d typography -f components/alert.md
-  
+
   # Skip cleanup for incremental updates
   svelte-doc-llm -d components --skip-clean
   ```
-  
+
   In selective mode, `llms.txt` and `context-full.txt` are regenerated with only the processed files, and cleanup is targeted to only matching output files.
 
 ## 0.7.0

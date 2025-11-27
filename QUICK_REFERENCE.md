@@ -41,12 +41,12 @@ svelte-doc-llm -d components --skip-clean
 
 ## Flags Reference
 
-| Flag | Long Form | Arguments | Description |
-|------|-----------|-----------|-------------|
-| `-d` | `--directories` | `<dir1> <dir2> ...` | Convert only specified directories |
-| `-f` | `--files` | `<file1> <file2> ...` | Convert only specified files |
-| | `--skip-clean` | none | Skip the cleanup phase |
-| `-h` | `--help` | none | Show help message |
+| Flag | Long Form       | Arguments             | Description                        |
+| ---- | --------------- | --------------------- | ---------------------------------- |
+| `-d` | `--directories` | `<dir1> <dir2> ...`   | Convert only specified directories |
+| `-f` | `--files`       | `<file1> <file2> ...` | Convert only specified files       |
+|      | `--skip-clean`  | none                  | Skip the cleanup phase             |
+| `-h` | `--help`        | none                  | Show help message                  |
 
 ## Path Rules
 
@@ -57,11 +57,11 @@ svelte-doc-llm -d components --skip-clean
 
 ## Behavior by Mode
 
-| Mode | Cleanup | Processing | Output Files |
-|------|---------|------------|--------------|
-| **Full** (no flags) | Based on `cleanOutDir` config | All files | All files |
-| **Selective** (`-d` or `-f`) | Only matching files | Only matching files | Only matching files |
-| **Skip-clean** (`--skip-clean`) | None | Specified files | Specified files |
+| Mode                            | Cleanup                       | Processing          | Output Files        |
+| ------------------------------- | ----------------------------- | ------------------- | ------------------- |
+| **Full** (no flags)             | Based on `cleanOutDir` config | All files           | All files           |
+| **Selective** (`-d` or `-f`)    | Only matching files           | Only matching files | Only matching files |
+| **Skip-clean** (`--skip-clean`) | None                          | Specified files     | Specified files     |
 
 ## Common Use Cases
 
@@ -130,15 +130,18 @@ svelte-doc-llm
 ## Troubleshooting
 
 **No files matched?**
+
 - Check paths are relative to `srcDir` in config
 - Use `DEBUG=true` to see what's happening
 
 **Files not cleaning?**
+
 - In selective mode, only matching files clean
 - Use `--skip-clean` to skip cleanup
 - Check `cleanOutDir` in config for full mode
 
 **Need help?**
+
 ```bash
 svelte-doc-llm --help
 ```

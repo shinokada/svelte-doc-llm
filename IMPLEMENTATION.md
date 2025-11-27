@@ -1,43 +1,54 @@
 # Implementation Summary: CLI Selective Processing Feature
 
 ## Overview
+
 Successfully implemented command-line options for selective processing of documentation files, allowing users to convert only specific directories or files instead of processing the entire documentation tree.
 
 ## Files Created
 
 ### 1. `/lib/cli.js`
+
 **Purpose**: Parse and validate command-line arguments
 
 **Functions**:
+
 - `parseArgs()` - Parses CLI arguments into structured options object
 - `showHelp()` - Displays formatted help message
 - `validateOptions(options)` - Validates parsed options for invalid characters
 
 **Supported flags**:
+
 - `-d, --directories` - Specify directories to process
 - `-f, --files` - Specify individual files to process
 - `--skip-clean` - Skip cleanup phase
 - `-h, --help` - Show help message
 
 ### 2. `/lib/fileFilter.js`
+
 **Purpose**: Filter files based on CLI options and calculate output paths
 
 **Functions**:
+
 - `filterFilesByOptions(allFiles, options, srcDir)` - Filters file list based on directory/file targets
 - `getOutputFilesToClean(filteredFiles, srcDir, outDir, format, stripPrefix)` - Calculates corresponding output files for cleanup
 
 **Features**:
+
 - Handles both directories and individual files
 - Supports nested directory filtering
 - Matches files with or without extensions
 - Respects `stripPrefix` configuration
 
 ### 3. `/lib/fileSystem.js` (updated)
+
 **New function**:
+
 - `cleanSpecificFiles(filePaths)` - Cleans only specified output files instead of entire directories
 
 ### 4. `/index.js` (rewritten)
+
 **Major changes**:
+
 - Integrated CLI argument parsing
 - Added selective mode detection
 - Implemented targeted cleanup for selective processing
@@ -45,6 +56,7 @@ Successfully implemented command-line options for selective processing of docume
 - Maintained backward compatibility (no arguments = process all)
 
 **Behavior**:
+
 - **Full mode** (no flags): Processes all files, full cleanup
 - **Selective mode** (-d or -f): Processes only matching files, targeted cleanup
 - **Skip-clean mode** (--skip-clean): No cleanup, just conversion
@@ -52,11 +64,13 @@ Successfully implemented command-line options for selective processing of docume
 ### 5. Tests Created
 
 #### `/tests/cli.test.js`
+
 - Tests argument parsing for all flag combinations
 - Tests validation logic for invalid paths
 - Tests help flag behavior
 
 #### `/tests/fileFilter.test.js`
+
 - Tests directory filtering (single, multiple, nested)
 - Tests file filtering (with/without extensions)
 - Tests combined directory + file filtering
@@ -65,7 +79,9 @@ Successfully implemented command-line options for selective processing of docume
 ## Documentation Created
 
 ### 1. `CLI_USAGE.md`
+
 Comprehensive usage guide covering:
+
 - Basic usage patterns
 - Selective processing examples
 - Cleanup control options
@@ -74,13 +90,17 @@ Comprehensive usage guide covering:
 - Troubleshooting tips
 
 ### 2. `README.md` (updated)
+
 Added sections for:
+
 - CLI Options with examples
 - Command-line argument reference
 - Updated features list
 
 ### 3. `CHANGELOG.md` (updated)
+
 Added version 0.8.0 entry documenting:
+
 - New CLI options
 - Benefits and use cases
 - Usage examples
@@ -88,34 +108,43 @@ Added version 0.8.0 entry documenting:
 ## Key Features Implemented
 
 ### 1. Directory-Specific Conversion
+
 ```bash
 svelte-doc-llm -d components forms
 ```
+
 - Converts only specified directories and their subdirectories
 - Useful for working on specific documentation sections
 
 ### 2. File-Specific Conversion
+
 ```bash
 svelte-doc-llm -f components/alert.md forms/input.md
 ```
+
 - Converts only specified individual files
 - Perfect for quick fixes or single-file updates
 
 ### 3. Combined Mode
+
 ```bash
 svelte-doc-llm -d typography -f components/alert.md
 ```
+
 - Mix directories and files in one command
 - Maximum flexibility
 
 ### 4. Skip Cleanup
+
 ```bash
 svelte-doc-llm -d components --skip-clean
 ```
+
 - Skips cleanup phase entirely
 - Useful for incremental builds
 
 ### 5. Smart Cleanup
+
 - **Full mode**: Cleans based on `cleanOutDir` config
 - **Selective mode**: Cleans only matching output files
 - **Skip-clean mode**: No cleanup at all
@@ -123,12 +152,14 @@ svelte-doc-llm -d components --skip-clean
 ## Technical Implementation Details
 
 ### Path Resolution
+
 - All paths are relative to `srcDir` from config
 - Supports both forward and backward slashes
 - Normalizes paths for cross-platform compatibility
 - Handles files with or without extensions
 
 ### Filtering Logic
+
 1. Parse CLI arguments into structured options
 2. Find all markdown files in source directory
 3. Filter based on directory/file patterns
@@ -138,11 +169,13 @@ svelte-doc-llm -d components --skip-clean
 7. Generate llms.txt and context-full.txt
 
 ### Backward Compatibility
+
 - No arguments = original behavior (process everything)
 - All existing configurations still work
 - No breaking changes to API or config
 
 ### Edge Cases Handled
+
 - No matches found (warning message)
 - Invalid path characters (validation)
 - Missing files (graceful skip)
@@ -153,12 +186,14 @@ svelte-doc-llm -d components --skip-clean
 ## Testing Coverage
 
 ### Unit Tests
+
 - ✅ CLI argument parsing (13 test cases)
 - ✅ Option validation (5 test cases)
 - ✅ File filtering (10 test cases)
 - ✅ Output path calculation (4 test cases)
 
 ### Test Scenarios
+
 - Single/multiple directories
 - Single/multiple files
 - Nested directories
@@ -170,6 +205,7 @@ svelte-doc-llm -d components --skip-clean
 ## User Experience Improvements
 
 ### Helpful Messages
+
 ```
 ✓ Processed 5 file(s) in selective mode
 Note: llms.txt and context-full.txt will contain only the processed files
@@ -179,17 +215,22 @@ Note: llms.txt and context-full.txt will contain only the processed files
 ```
 
 ### Debug Output
+
 When `DEBUG=true`:
+
 - Shows parsed CLI options
 - Lists files being processed
 - Shows filtering decisions
 - Displays cleanup operations
 
 ### Help System
+
 ```bash
 svelte-doc-llm --help
 ```
+
 Shows comprehensive help with:
+
 - Usage syntax
 - All available options
 - Multiple examples
@@ -198,6 +239,7 @@ Shows comprehensive help with:
 ## Package.json Updates
 
 Added convenience scripts:
+
 ```json
 {
   "llm:dir": "node ./index.js -d",
@@ -209,16 +251,19 @@ Added convenience scripts:
 ## Benefits
 
 ### For Developers
+
 1. **Faster iteration**: Convert only files you're working on
 2. **Better debugging**: Focus on specific files when troubleshooting
 3. **Flexible workflow**: Match your development style
 
 ### For CI/CD
+
 1. **Incremental builds**: Process only changed files
 2. **Faster pipelines**: Skip unnecessary conversions
 3. **Better resource usage**: Less processing time
 
 ### For Large Projects
+
 1. **Manageable conversions**: Don't wait for hundreds of files
 2. **Section-by-section updates**: Update documentation gradually
 3. **Targeted testing**: Test specific sections independently
@@ -226,6 +271,7 @@ Added convenience scripts:
 ## Future Enhancements (Not Implemented)
 
 Possible additions for future versions:
+
 - `--watch` mode for automatic conversion on file changes
 - `--git-diff` to automatically detect changed files
 - `--parallel` for parallel processing
@@ -244,11 +290,13 @@ Possible additions for future versions:
 No migration needed! The new features are purely additive:
 
 **Before** (still works):
+
 ```bash
 svelte-doc-llm
 ```
 
 **Now also available**:
+
 ```bash
 svelte-doc-llm -d components
 svelte-doc-llm -f components/alert.md

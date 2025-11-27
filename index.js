@@ -1,11 +1,7 @@
 #!/usr/bin/env node
 
 import { loadConfig } from './lib/config.js';
-import {
-  cleanDirectory,
-  cleanDirectoryCompletely,
-  cleanSpecificFiles
-} from './lib/fileSystem.js';
+import { cleanDirectory, cleanDirectoryCompletely, cleanSpecificFiles } from './lib/fileSystem.js';
 import { processFiles, generateLlmsTxt, generateContextFull } from './lib/converter.js';
 import { parseArgs, showHelp, validateOptions } from './lib/cli.js';
 import { filterFilesByOptions, getOutputFilesToClean } from './lib/fileFilter.js';
@@ -139,12 +135,8 @@ async function main() {
 
     // In selective mode, inform user about partial generation
     if (isSelectiveMode) {
-      console.log(
-        `\n✓ Processed ${processedFiles.length} file(s) in selective mode`
-      );
-      console.log(
-        '  Note: llms.txt and context-full.txt will contain only the processed files'
-      );
+      console.log(`\n✓ Processed ${processedFiles.length} file(s) in selective mode`);
+      console.log('  Note: llms.txt and context-full.txt will contain only the processed files');
     }
 
     // Generate llms.txt file
@@ -176,7 +168,7 @@ async function main() {
 }
 
 // Run the script
-main().catch((error) => {
+main().catch(error => {
   console.error('Unhandled error:', error);
   process.exit(1);
 });

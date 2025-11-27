@@ -16,7 +16,7 @@ describe('loadConfig', () => {
     // Backup existing config if it exists
     try {
       originalConfig = await fs.readFile(configPath, 'utf8');
-    } catch (err) {
+    } catch (_) {
       originalConfig = null;
     }
   });
@@ -29,7 +29,7 @@ describe('loadConfig', () => {
       } else {
         await fs.unlink(configPath);
       }
-    } catch (err) {
+    } catch (_) {
       // Ignore cleanup errors
     }
 
@@ -43,7 +43,7 @@ describe('loadConfig', () => {
     if (testDir) {
       try {
         await fs.rm(testDir, { recursive: true, force: true });
-      } catch (err) {
+      } catch (_) {
         // Ignore cleanup errors
       }
       testDir = null;

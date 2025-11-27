@@ -84,9 +84,9 @@ describe('File Filter', () => {
         path.join(mockSrcDir, 'forms/input.md'),
         path.join(mockSrcDir, 'typography/text.md')
       ];
-      const options = { 
-        directories: [], 
-        files: ['components/alert.md', 'forms/input.md'] 
+      const options = {
+        directories: [],
+        files: ['components/alert.md', 'forms/input.md']
       };
 
       const result = filterFilesByOptions(files, options, mockSrcDir);
@@ -114,9 +114,9 @@ describe('File Filter', () => {
         path.join(mockSrcDir, 'forms/input.md'),
         path.join(mockSrcDir, 'typography/text.md')
       ];
-      const options = { 
-        directories: ['components'], 
-        files: ['typography/text.md'] 
+      const options = {
+        directories: ['components'],
+        files: ['typography/text.md']
       };
 
       const result = filterFilesByOptions(files, options, mockSrcDir);
@@ -161,9 +161,7 @@ describe('File Filter', () => {
     });
 
     it('should apply stripPrefix correctly', () => {
-      const filteredFiles = [
-        path.join(mockSrcDir, 'components/alert.md')
-      ];
+      const filteredFiles = [path.join(mockSrcDir, 'components/alert.md')];
       const format = 'md';
       const stripPrefix = 'components';
 

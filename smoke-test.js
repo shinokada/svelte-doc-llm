@@ -31,7 +31,7 @@ test('parseArgs handles no arguments', () => {
   process.argv = ['node', 'svelte-doc-llm'];
   const options = parseArgs();
   process.argv = originalArgv;
-  
+
   if (options.directories.length !== 0) {
     throw new Error('Expected empty directories');
   }
@@ -49,7 +49,7 @@ test('parseArgs handles -d flag', () => {
   process.argv = ['node', 'svelte-doc-llm', '-d', 'components', 'forms'];
   const options = parseArgs();
   process.argv = originalArgv;
-  
+
   if (options.directories.length !== 2) {
     throw new Error('Expected 2 directories');
   }
@@ -67,7 +67,7 @@ test('parseArgs handles -f flag', () => {
   process.argv = ['node', 'svelte-doc-llm', '-f', 'test.md'];
   const options = parseArgs();
   process.argv = originalArgv;
-  
+
   if (options.files.length !== 1) {
     throw new Error('Expected 1 file');
   }
@@ -82,7 +82,7 @@ test('parseArgs handles --skip-clean flag', () => {
   process.argv = ['node', 'svelte-doc-llm', '--skip-clean'];
   const options = parseArgs();
   process.argv = originalArgv;
-  
+
   if (options.skipClean !== true) {
     throw new Error('Expected skipClean to be true');
   }
@@ -94,7 +94,7 @@ test('validateOptions accepts valid paths', () => {
     directories: ['components', 'forms/inputs'],
     files: ['test.md', 'docs/guide.md']
   };
-  
+
   if (!validateOptions(options)) {
     throw new Error('Expected validation to pass');
   }
@@ -106,7 +106,7 @@ test('validateOptions rejects invalid characters', () => {
     directories: ['components<test>'],
     files: []
   };
-  
+
   if (validateOptions(options)) {
     throw new Error('Expected validation to fail');
   }
@@ -117,7 +117,7 @@ test('filterFilesByOptions returns all files when no filters', () => {
   const files = ['/src/docs/a.md', '/src/docs/b.md'];
   const options = { directories: [], files: [] };
   const srcDir = '/src/docs';
-  
+
   const filtered = filterFilesByOptions(files, options, srcDir);
   if (filtered.length !== 2) {
     throw new Error('Expected all files to be returned');
@@ -133,7 +133,7 @@ test('filterFilesByOptions filters by directory', () => {
   ];
   const options = { directories: ['components'], files: [] };
   const srcDir = '/src/docs';
-  
+
   const filtered = filterFilesByOptions(files, options, srcDir);
   if (filtered.length !== 2) {
     throw new Error(`Expected 2 files, got ${filtered.length}`);
@@ -148,12 +148,12 @@ test('filterFilesByOptions handles combined filters', () => {
     '/src/docs/forms/input.md',
     '/src/docs/typography/text.md'
   ];
-  const options = { 
-    directories: ['components'], 
-    files: ['typography/text.md'] 
+  const options = {
+    directories: ['components'],
+    files: ['typography/text.md']
   };
   const srcDir = '/src/docs';
-  
+
   const filtered = filterFilesByOptions(files, options, srcDir);
   if (filtered.length !== 3) {
     throw new Error(`Expected 3 files, got ${filtered.length}`);

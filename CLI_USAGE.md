@@ -13,6 +13,7 @@ svelte-doc-llm
 ```
 
 This will:
+
 1. Find all `.md` files in `srcDir` (from config)
 2. Clean the output directory according to `cleanOutDir` setting
 3. Process all files
@@ -36,6 +37,7 @@ svelte-doc-llm -d components/advanced forms/inputs
 ```
 
 **Use cases:**
+
 - You updated only component documentation
 - Working on a specific feature section
 - Testing changes to a subset of docs
@@ -56,6 +58,7 @@ svelte-doc-llm -f components/alert components/button.md
 ```
 
 **Use cases:**
+
 - Fixed a typo in one file
 - Updated a single component's documentation
 - Quick iteration on specific pages
@@ -73,6 +76,7 @@ svelte-doc-llm -d components forms -f utilities/colors.md extend/theme.md
 ```
 
 **Use cases:**
+
 - Major update to one section, minor fixes elsewhere
 - Reorganizing documentation structure
 
@@ -92,6 +96,7 @@ svelte-doc-llm -f components/alert.md --skip-clean
 ```
 
 **Use cases:**
+
 - Incremental builds
 - You manually cleaned specific files
 - Preserving other generated files in output directory
@@ -165,6 +170,7 @@ npm run debug:cli -- -d components
 ```
 
 Debug output shows:
+
 - Configuration being used
 - Files being processed
 - Filtering decisions
@@ -177,9 +183,9 @@ All paths in `-d` and `-f` are relative to `srcDir` in your config:
 ```javascript
 // llm.config.js
 export default {
-  srcDir: './src/routes/docs',
+  srcDir: './src/routes/docs'
   // ...
-}
+};
 ```
 
 ```bash
@@ -223,11 +229,13 @@ svelte-doc-llm -f typo-file.md --skip-clean
 ## Output Behavior
 
 ### Full Mode (no -d or -f)
+
 - Cleans output directory (based on `cleanOutDir` config)
 - Processes all files
 - Generates `llms.txt` and `context-full.txt` with all documentation
 
 ### Selective Mode (-d or -f)
+
 - Cleans only matching output files (unless `--skip-clean`)
 - Processes only matching input files
 - Generates `llms.txt` and `context-full.txt` with only processed files
@@ -250,6 +258,7 @@ svelte-doc-llm -d nonexistent
 ### Wrong Directory Structure
 
 If your output doesn't match expectations, check:
+
 1. `srcDir` in config
 2. `stripPrefix` setting in config
 3. Use `DEBUG=true` to see path resolution
@@ -257,6 +266,7 @@ If your output doesn't match expectations, check:
 ### Files Not Cleaning
 
 If old output files remain:
+
 - Check `cleanOutDir` setting in config
 - In selective mode, only matching files are cleaned
 - Use `--skip-clean` flag understanding

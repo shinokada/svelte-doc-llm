@@ -3,15 +3,18 @@
 ## Applied Fixes (6/9 suggestions)
 
 ### ✅ 1. Remove redundant `fs.access` check (lib/fileSystem.js)
+
 **Status: Applied**
 **Rating: ⭐⭐⭐⭐⭐**
 
 **Changes:**
+
 - Removed `fs.access` call before `fs.unlink`
 - Simplified error handling logic
 - Better ENOENT error handling
 
 **Benefits:**
+
 - Eliminates one syscall per file (performance improvement)
 - Removes TOCTOU (time-of-check-to-time-of-use) race condition
 - Cleaner, simpler code
@@ -20,13 +23,16 @@
 ---
 
 ### ✅ 2. Add colon to invalid characters (lib/cli.js)
+
 **Status: Applied**
 **Rating: ⭐⭐⭐⭐**
 
 **Changes:**
+
 - Updated regex from `/[<>"|?*]/` to `/[<>"|?*:]/`
 
 **Benefits:**
+
 - Better Windows compatibility
 - Prevents invalid paths like `C:components` (except drive letters)
 - More robust path validation
@@ -34,13 +40,16 @@
 ---
 
 ### ✅ 3. Use `const` instead of `let` (index.js)
+
 **Status: Applied**
 **Rating: ⭐⭐⭐⭐**
 
 **Changes:**
+
 - Changed `let allFiles` to `const allFiles`
 
 **Benefits:**
+
 - Better code quality
 - Signals intent (variable won't be reassigned)
 - Aligns with modern JavaScript best practices
@@ -48,27 +57,33 @@
 ---
 
 ### ✅ 4. Remove redundant backslash check (lib/fileFilter.js)
+
 **Status: Applied**
 **Rating: ⭐⭐⭐**
 
 **Changes:**
+
 - Removed redundant backslash check after path normalization
 - Simplified conditional logic
 
 **Benefits:**
+
 - Cleaner code after normalization to forward slashes
 - No functional change, just removed dead code
 
 ---
 
 ### ✅ 5. Add braces to if statements (smoke-test.js)
+
 **Status: Applied**
 **Rating: ⭐⭐⭐**
 
 **Changes:**
+
 - Added braces to all single-line if statements (9 locations)
 
 **Benefits:**
+
 - Aligns with ESLint rules
 - More consistent code style
 - Easier to add debugging statements later
@@ -76,23 +91,28 @@
 ---
 
 ### ✅ 6. Simplify redundant file matching condition (lib/fileFilter.js)
+
 **Status: Applied**
 **Rating: ⭐⭐⭐⭐⭐**
 
 **Changes:**
+
 - Removed redundant middle condition in file matching logic
 - Simplified from 3 conditions to 2 conditions
 
 **Analysis:**
 The middle condition `relativePathNoExt === normalizedFile` was redundant:
+
 - When user provides `alert` (no ext): Identical to condition 3
 - When user provides `alert.md`: Never matches anyway
 
 Only 2 conditions needed:
+
 1. Exact match with extension: `relativePath === normalizedFile`
 2. Match without extension: `relativePathNoExt === normalizedFile.replace(/\.[^.]+$/, '')`
 
 **Benefits:**
+
 - Cleaner, more maintainable code
 - Eliminates redundant comparison
 - Same functionality with simpler logic
@@ -103,6 +123,7 @@ Only 2 conditions needed:
 ## Not Applied (3/9 suggestions)
 
 ### ❌ 7. Strengthen stripPrefix assertion (tests/fileFilter.test.js)
+
 **Status: Not applied**
 **Rating: ⭐⭐**
 
@@ -110,6 +131,7 @@ Only 2 conditions needed:
 The suggested assertion is too brittle and platform-specific. Current assertion correctly tests the important behavior (no doubled directory names) without being overly specific about exact path structure.
 
 **Current test is better because:**
+
 - Platform independent
 - Tests actual bug scenario (doubled paths)
 - Less likely to break on legitimate changes
@@ -117,6 +139,7 @@ The suggested assertion is too brittle and platform-specific. Current assertion 
 ---
 
 ### 📋 8. Extract shared stripPrefix logic (lib/fileFilter.js)
+
 **Status: Deferred to v0.9.0**
 **Rating: ⭐⭐⭐⭐**
 
@@ -126,6 +149,7 @@ Good suggestion but risky to refactor right before v0.8.0 release. The logic is 
 **Action:** Added to backlog for future refactoring in v0.9.0
 
 **Why defer:**
+
 - Not a bug, just code organization
 - Complex refactoring could introduce bugs
 - About to release v0.8.0
@@ -134,6 +158,7 @@ Good suggestion but risky to refactor right before v0.8.0 release. The logic is 
 ---
 
 ### 📋 9. Extract cleanup logic into helper function (index.js)
+
 **Status: Deferred to v0.9.0**
 **Rating: ⭐⭐⭐**
 
@@ -141,11 +166,13 @@ Good suggestion but risky to refactor right before v0.8.0 release. The logic is 
 Good architectural suggestion but involves significant refactoring right before release.
 
 **Pros of extraction:**
+
 - Better separation of concerns
 - Reduced nesting depth
 - More testable in isolation
 
 **Why defer:**
+
 - Cleanup logic references many local variables
 - Would require passing many parameters
 - Not a bug or performance issue
@@ -158,6 +185,7 @@ Good architectural suggestion but involves significant refactoring right before 
 ## Summary
 
 ### Applied: 6 fixes
+
 - ✅ Performance improvement (removed syscall)
 - ✅ Better Windows compatibility
 - ✅ Better code quality (const vs let)
@@ -166,30 +194,36 @@ Good architectural suggestion but involves significant refactoring right before 
 - ✅ Simplified file matching (removed redundancy)
 
 ### Deferred: 2 refactorings
+
 - 📋 Extract shared stripPrefix logic → v0.9.0
 - 📋 Extract cleanup helper function → v0.9.0
 
 ### Rejected: 1 test suggestion
+
 - ❌ Too-specific assertion → current test is better
 
 ## Impact Assessment
 
 ### Performance
+
 - ✅ Small improvement from removing redundant `fs.access` calls
 - ✅ Eliminated redundant file matching comparison
 - No regressions
 
 ### Compatibility
+
 - ✅ Better Windows path validation
 - No breaking changes
 
 ### Code Quality
+
 - ✅ More maintainable code
 - ✅ Better aligned with best practices
 - ✅ Passes ESLint rules
 - ✅ Simpler logic (less cognitive load)
 
 ### Risk
+
 - ✅ All changes are low risk
 - ✅ No functional behavior changes
 - ✅ Same test coverage
@@ -218,6 +252,7 @@ The two deferred refactorings (extracting stripPrefix logic and cleanup helper) 
 ## v0.9.0 Refactoring Backlog
 
 For the next minor version, consider:
+
 1. Extract shared `stripPrefix` logic into utility function
 2. Extract cleanup logic into helper function
 3. Both can be done together as a "code organization" update
