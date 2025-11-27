@@ -1,6 +1,6 @@
 # CodeRabbit AI Suggestions - Implementation Summary
 
-## Applied Fixes (5/7 suggestions)
+## Applied Fixes (6/9 suggestions)
 
 ### ✅ 1. Remove redundant `fs.access` check (lib/fileSystem.js)
 **Status: Applied**
@@ -75,9 +75,34 @@
 
 ---
 
-## Not Applied (2/7 suggestions)
+### ✅ 6. Simplify redundant file matching condition (lib/fileFilter.js)
+**Status: Applied**
+**Rating: ⭐⭐⭐⭐⭐**
 
-### ❌ 6. Strengthen stripPrefix assertion (tests/fileFilter.test.js)
+**Changes:**
+- Removed redundant middle condition in file matching logic
+- Simplified from 3 conditions to 2 conditions
+
+**Analysis:**
+The middle condition `relativePathNoExt === normalizedFile` was redundant:
+- When user provides `alert` (no ext): Identical to condition 3
+- When user provides `alert.md`: Never matches anyway
+
+Only 2 conditions needed:
+1. Exact match with extension: `relativePath === normalizedFile`
+2. Match without extension: `relativePathNoExt === normalizedFile.replace(/\.[^.]+$/, '')`
+
+**Benefits:**
+- Cleaner, more maintainable code
+- Eliminates redundant comparison
+- Same functionality with simpler logic
+- Created test-file-matching.js to verify correctness
+
+---
+
+## Not Applied (3/9 suggestions)
+
+### ❌ 7. Strengthen stripPrefix assertion (tests/fileFilter.test.js)
 **Status: Not applied**
 **Rating: ⭐⭐**
 
@@ -91,7 +116,7 @@ The suggested assertion is too brittle and platform-specific. Current assertion 
 
 ---
 
-### 📋 7. Extract shared stripPrefix logic (lib/fileFilter.js)
+### 📋 8. Extract shared stripPrefix logic (lib/fileFilter.js)
 **Status: Deferred to v0.9.0**
 **Rating: ⭐⭐⭐⭐**
 
@@ -108,17 +133,41 @@ Good suggestion but risky to refactor right before v0.8.0 release. The logic is 
 
 ---
 
+### 📋 9. Extract cleanup logic into helper function (index.js)
+**Status: Deferred to v0.9.0**
+**Rating: ⭐⭐⭐**
+
+**Reason:**
+Good architectural suggestion but involves significant refactoring right before release.
+
+**Pros of extraction:**
+- Better separation of concerns
+- Reduced nesting depth
+- More testable in isolation
+
+**Why defer:**
+- Cleanup logic references many local variables
+- Would require passing many parameters
+- Not a bug or performance issue
+- Can be done with stripPrefix refactoring in v0.9.0
+
+**Action:** Added to v0.9.0 refactoring backlog
+
+---
+
 ## Summary
 
-### Applied: 5 fixes
+### Applied: 6 fixes
 - ✅ Performance improvement (removed syscall)
 - ✅ Better Windows compatibility
 - ✅ Better code quality (const vs let)
-- ✅ Cleaner logic (removed dead code)
+- ✅ Cleaner logic (removed dead code x2)
 - ✅ Better code style (consistent braces)
+- ✅ Simplified file matching (removed redundancy)
 
-### Deferred: 1 refactoring
+### Deferred: 2 refactorings
 - 📋 Extract shared stripPrefix logic → v0.9.0
+- 📋 Extract cleanup helper function → v0.9.0
 
 ### Rejected: 1 test suggestion
 - ❌ Too-specific assertion → current test is better
@@ -127,6 +176,7 @@ Good suggestion but risky to refactor right before v0.8.0 release. The logic is 
 
 ### Performance
 - ✅ Small improvement from removing redundant `fs.access` calls
+- ✅ Eliminated redundant file matching comparison
 - No regressions
 
 ### Compatibility
@@ -137,24 +187,37 @@ Good suggestion but risky to refactor right before v0.8.0 release. The logic is 
 - ✅ More maintainable code
 - ✅ Better aligned with best practices
 - ✅ Passes ESLint rules
+- ✅ Simpler logic (less cognitive load)
 
 ### Risk
 - ✅ All changes are low risk
 - ✅ No functional behavior changes
 - ✅ Same test coverage
+- ✅ Additional test created for file matching
 
 ## Recommendation
 
-All applied fixes are **safe to release in v0.8.0**. They improve code quality without changing functionality.
+All applied fixes are **safe to release in v0.8.0**. They improve code quality and performance without changing functionality.
 
-The deferred refactoring (extracting stripPrefix logic) is a good candidate for v0.9.0 after v0.8.0 has been tested in production.
+The two deferred refactorings (extracting stripPrefix logic and cleanup helper) are good candidates for v0.9.0 after v0.8.0 has been tested in production.
 
 ## Files Modified
 
 1. `lib/fileSystem.js` - Removed redundant fs.access
 2. `lib/cli.js` - Added colon to invalid chars
 3. `index.js` - Changed let to const
-4. `lib/fileFilter.js` - Removed redundant backslash check
+4. `lib/fileFilter.js` - Removed redundant backslash check + simplified file matching
 5. `smoke-test.js` - Added braces to if statements
 
 **Total changes: 5 files, all low-risk improvements**
+
+## Tests Created
+
+1. `test-file-matching.js` - Validates simplified file matching logic (5 test cases)
+
+## v0.9.0 Refactoring Backlog
+
+For the next minor version, consider:
+1. Extract shared `stripPrefix` logic into utility function
+2. Extract cleanup logic into helper function
+3. Both can be done together as a "code organization" update

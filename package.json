@@ -27,6 +27,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest",
+    "test:smoke": "node smoke-test.js",
     "test:unit": "vitest run tests/processors tests/config.test.js tests/fileSystem.test.js",
     "test:integration": "vitest run tests/integration",
     "test:watch": "vitest --watch",
